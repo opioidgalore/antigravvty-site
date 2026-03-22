@@ -26,7 +26,7 @@ const faqs = [
   {
     question: "Koľko zákazníkov mi to prinesie?",
     answer:
-      "Neprinesiem vám nových zákazníkov. Ale pomôžem vám nestráť tých, ktorí už volajú. 68% zákazníkov sa neozvem späť po zmeškanom hovore. Toto to rieši.",
+      "Neprinesiem vám nových zákazníkov. Ale pomôžem vám nestratiť tých, ktorí už volajú. 68% zákazníkov sa neozvem späť po zmeškanom hovore. Toto to rieši.",
   },
   {
     question: "Ako platím?",

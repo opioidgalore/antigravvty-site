@@ -61,16 +61,7 @@ export default function SocialProof() {
           })}
         </StaggerContainer>
 
-        {/* Testimonial placeholder */}
-        <AnimationWrapper variant="fadeIn" delay={0.3}>
-          <div className="max-w-[600px] mx-auto text-center">
-            <blockquote className="text-xl md:text-2xl italic text-charcoal/70 mb-4">
-              &ldquo;Placeholder for future client testimonial. Will be added
-              after first paying client.&rdquo;
-            </blockquote>
-            <p className="text-sm text-gray">— Prvý spokojný klient (čoskoro)</p>
-          </div>
-        </AnimationWrapper>
+
       </div>
     </section>
   );

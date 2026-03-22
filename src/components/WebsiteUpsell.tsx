@@ -25,9 +25,8 @@ export default function WebsiteUpsell() {
                   </h3>
                 </div>
                 <p className="text-base leading-7 text-gray mb-5 max-w-2xl">
-                  Váš chatbot potrebuje moderný domov. Ak váš súčasný web
-                  nefunguje na mobiloch alebo je zastaraný, vytvorím vám
-                  bleskovú webstránku už od 400€.
+                  Máte zastaranú webstránku? Vytvorím vám modernú stránku, ktorá
+                  funguje na mobiloch, už od 400€. Dodanie za 5 dní.
                 </p>
                 <div className="flex flex-wrap gap-5">
                   {[
