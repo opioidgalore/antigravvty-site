@@ -4,16 +4,11 @@ import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle, MessageSquare } from "lucide-react";
 import { useState, useEffect } from "react";
 import AnimationWrapper from "./AnimationWrapper";
-
-const chatMessages = [
-  { sender: "agent", text: "Dobrý deň! Potrebujete termín?" },
-  { sender: "user", text: "Áno, prosím." },
-  { sender: "agent", text: "Perfektné. Kedy vám to vyhovuje?" },
-  { sender: "user", text: "Zajtra popoludní?" },
-  { sender: "agent", text: "✓ Rezervované na zajtra 14:00!" },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function Hero() {
+  const { t } = useLanguage();
+  const chatMessages = t.hero.chatMessages;
   const [visibleMessages, setVisibleMessages] = useState(0);
 
   useEffect(() => {
@@ -28,7 +23,7 @@ export default function Hero() {
     }, 1800);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [chatMessages.length]);
 
   return (
     <section
@@ -51,23 +46,22 @@ export default function Hero() {
           <div className="lg:col-span-3 space-y-8">
             <AnimationWrapper variant="fadeIn" delay={0.1}>
               <p className="text-xs font-bold uppercase tracking-[0.15em] text-primary/70 mb-3">
-                AI AUTOMATIZÁCIA PRE MALÉ FIRMY
+                {t.hero.subtitle}
               </p>
             </AnimationWrapper>
 
             <AnimationWrapper variant="slideUp" delay={0.2}>
               <h1 className="text-[42px] md:text-[56px] leading-[1.1] font-bold text-charcoal tracking-tight">
-                Získajte viac zákazníkov bez toho, aby ste museli{" "}
-                <span className="text-primary">zdvihnúť telefón</span>
+                {t.hero.heading}
+                <span className="text-primary">{t.hero.headingHighlight}</span>
               </h1>
             </AnimationWrapper>
 
             <AnimationWrapper variant="slideUp" delay={0.35}>
               <p className="text-lg md:text-xl leading-relaxed text-gray max-w-xl">
-                Chatbot na webe odpovedá 24/7, SMS agent reaguje na zmeškané
-                hovory a systém Google recenzií zbiera hodnotenia automaticky.{" "}
+                {t.hero.description}
                 <span className="text-primary font-semibold">
-                  Prvý mesiac zadarmo.
+                  {t.hero.descriptionHighlight}
                 </span>
               </p>
             </AnimationWrapper>
@@ -82,7 +76,7 @@ export default function Hero() {
                   {/* Shimmer effect on hover */}
                   <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
                   
-                  <span className="relative z-10">Pozrite si demo</span>
+                  <span className="relative z-10">{t.hero.ctaPrimary}</span>
                   <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 </a>
 
@@ -91,20 +85,16 @@ export default function Hero() {
                   href="#pricing"
                   className="group inline-flex items-center gap-2.5 bg-white text-primary font-semibold px-8 py-4 rounded-lg border-2 border-primary hover:-translate-y-1 hover:bg-primary/5 transition-all duration-300 cursor-pointer shadow-[0_2px_8px_0_rgba(0,102,255,0.1)] hover:shadow-[0_6px_16px_0_rgba(0,102,255,0.2)]"
                 >
-                  <span>Cenová ponuka</span>
+                  <span>{t.hero.ctaSecondary}</span>
                 </a>
               </div>
             </AnimationWrapper>
 
             <AnimationWrapper variant="fadeIn" delay={0.65}>
               <div className="flex flex-wrap gap-6 pt-4">
-                {[
-                  "Bez záväzkov",
-                  "Prvý mesiac zadarmo",
-                  "Inštalácia za 1 deň",
-                ].map((badge, i) => (
+                {t.hero.badges.map((badge, i) => (
                   <motion.div
-                    key={badge}
+                    key={i}
                     initial={{ opacity: 0, x: -10 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.7 + i * 0.1 }}
@@ -146,7 +136,7 @@ export default function Hero() {
                     </div>
                     <div>
                       <div className="text-white font-semibold text-sm">
-                        Automatizácia AI
+                        {t.hero.chatHeader}
                       </div>
                       <div className="flex items-center gap-1.5">
                         {/* Pulsing green dot */}
@@ -160,7 +150,7 @@ export default function Hero() {
                           className="w-2 h-2 bg-success rounded-full"
                         />
                         <span className="text-white/90 text-xs">
-                          Online teraz
+                          {t.hero.chatOnline}
                         </span>
                       </div>
                     </div>

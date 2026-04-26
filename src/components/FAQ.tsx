@@ -6,39 +6,7 @@ import AnimationWrapper, {
   StaggerContainer,
   StaggerItem,
 } from "./AnimationWrapper";
-
-const faqs = [
-  {
-    question: "Ako dlho trvá inštalácia?",
-    answer:
-      "Chatbot je hotový do 24 hodín. SMS agent a Google recenzie do 48 hodín. Stačí mi prístup k vašej webstránke a Google Business profilu.",
-  },
-  {
-    question: "Potrebujem novú webstránku?",
-    answer:
-      "Nie. Chatbot funguje na akejkoľvek existujúcej stránke. Stačí pridať jeden riadok kódu. Ak však chcete modernú stránku, vytvorím vám ju od 400€.",
-  },
-  {
-    question: "Čo ak nie som spokojný?",
-    answer:
-      "Prvý mesiac máte zadarmo. Ak vám to nepomôže, jednoducho prestanete platiť. Žiadne výpovedné lehoty.",
-  },
-  {
-    question: "Koľko zákazníkov mi to prinesie?",
-    answer:
-      "Neprinesiem vám nových zákazníkov. Ale pomôžem vám nestratiť tých, ktorí už volajú. 68% zákazníkov sa neozvem späť po zmeškanom hovore. Toto to rieši.",
-  },
-  {
-    question: "Ako platím?",
-    answer:
-      "50% vopred, 50% pri odovzdaní. Potom mesačne cez PayPal. Môžete zrušiť kedykoľvek.",
-  },
-  {
-    question: "Funguje to aj pre moju firmu (elektrikár/vodár/kúrenie)?",
-    answer:
-      "Áno. Chatbot je prispôsobený presne pre vašu firmu. Ukážem vám demo pred podpisom zmluvy.",
-  },
-];
+import { useLanguage } from "@/i18n/LanguageContext";
 
 function FAQItem({
   question,
@@ -79,6 +47,9 @@ function FAQItem({
 }
 
 export default function FAQ() {
+  const { t } = useLanguage();
+  const faqs = t.faq.items;
+
   // split into 2 columns
   const half = Math.ceil(faqs.length / 2);
   const leftCol = faqs.slice(0, half);
@@ -89,7 +60,7 @@ export default function FAQ() {
       <div className="mx-auto max-w-[1200px] px-6">
         <AnimationWrapper variant="fadeIn" className="text-center mb-16">
           <h2 className="text-3xl md:text-[40px] md:leading-[48px] font-bold text-charcoal mb-4">
-            Často kladené otázky
+            {t.faq.heading}
           </h2>
         </AnimationWrapper>
 
@@ -98,15 +69,15 @@ export default function FAQ() {
           staggerDelay={0.1}
         >
           <div className="space-y-4">
-            {leftCol.map((faq) => (
-              <StaggerItem key={faq.question}>
+            {leftCol.map((faq, i) => (
+              <StaggerItem key={i}>
                 <FAQItem question={faq.question} answer={faq.answer} />
               </StaggerItem>
             ))}
           </div>
           <div className="space-y-4">
-            {rightCol.map((faq) => (
-              <StaggerItem key={faq.question}>
+            {rightCol.map((faq, i) => (
+              <StaggerItem key={i}>
                 <FAQItem question={faq.question} answer={faq.answer} />
               </StaggerItem>
             ))}

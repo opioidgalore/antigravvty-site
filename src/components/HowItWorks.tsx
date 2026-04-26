@@ -5,41 +5,19 @@ import AnimationWrapper, {
   StaggerContainer,
   StaggerItem,
 } from "./AnimationWrapper";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const steps = [
-  {
-    number: "01",
-    icon: Mail,
-    title: "Kontaktujete ma",
-    description: "E-mail alebo SMS, odpoviem do 2 hodín",
-  },
-  {
-    number: "02",
-    icon: Video,
-    title: "Dostanete demo",
-    description: "Ukážka presne pre váš biznis",
-  },
-  {
-    number: "03",
-    icon: FileText,
-    title: "Zmluva + platba",
-    description: "50% vopred, 50% pri odovzdaní",
-  },
-  {
-    number: "04",
-    icon: Rocket,
-    title: "Inštalácia za 1 deň",
-    description: "Všetko funguje, prvý mesiac zadarmo",
-  },
-];
+const stepIcons = [Mail, Video, FileText, Rocket];
 
 export default function HowItWorks() {
+  const { t } = useLanguage();
+
   return (
     <section id="how-it-works" className="bg-primary-light py-15 md:py-30">
       <div className="mx-auto max-w-[1200px] px-6">
         <AnimationWrapper variant="fadeIn" className="text-center mb-16">
           <h2 className="text-3xl md:text-[40px] md:leading-[48px] font-bold text-charcoal mb-4">
-            Od kontaktu k inštalácii za 48 hodín
+            {t.howItWorks.heading}
           </h2>
         </AnimationWrapper>
 
@@ -48,8 +26,8 @@ export default function HowItWorks() {
           <div className="hidden md:block absolute top-16 left-[12.5%] right-[12.5%] h-0.5 border-t-2 border-dashed border-primary/30" />
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
-            {steps.map((step) => {
-              const Icon = step.icon;
+            {t.howItWorks.steps.map((step, idx) => {
+              const Icon = stepIcons[idx];
               return (
                 <StaggerItem key={step.number}>
                   <div className="relative text-center flex flex-col items-center">

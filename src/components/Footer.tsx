@@ -1,16 +1,13 @@
 "use client";
 
 import { Mail, Phone } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const serviceLinks = [
-  { label: "Chatbot", href: "#services" },
-  { label: "SMS agent", href: "#services" },
-  { label: "Google recenzie", href: "#services" },
-  { label: "Tvorba webstránok", href: "#contact" },
-  { label: "Cenová ponuka", href: "#pricing" },
-];
+const serviceHrefs = ["#services", "#services", "#services", "#contact", "#pricing"];
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-charcoal text-gray-400">
       <div className="mx-auto max-w-[1200px] px-6 py-15 md:py-20">
@@ -19,18 +16,17 @@ export default function Footer() {
           <div>
             <h3 className="text-xl font-bold text-white mb-2">Ádám Bauer</h3>
             <p className="text-sm font-semibold text-primary mb-4">
-              AI Automatizácia pre malé firmy
+              {t.footer.brandSubtitle}
             </p>
             <p className="text-sm leading-6 text-gray-400">
-              Pomáham elektrikárom, vodárom a stavbárom získavať viac zákazníkov
-              bez toho, aby museli zdvihnúť telefón.
+              {t.footer.brandDescription}
             </p>
           </div>
 
           {/* Kontakt */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
-              Kontakt
+              {t.footer.contactHeading}
             </h4>
             <ul className="space-y-3">
               <li>
@@ -52,22 +48,24 @@ export default function Footer() {
                 </a>
               </li>
               <li className="text-xs text-gray-500 pl-6">
-                (SMS preferovaná, hovor v EN/HU/FR)
+                {t.footer.smsNote}
               </li>
             </ul>
           </div>
 
           {/* Služby */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-4">Služby</h4>
+            <h4 className="text-base font-semibold text-white mb-4">
+              {t.footer.servicesHeading}
+            </h4>
             <ul className="space-y-2.5">
-              {serviceLinks.map((link) => (
-                <li key={link.label}>
+              {t.footer.serviceLinks.map((label, i) => (
+                <li key={i}>
                   <a
-                    href={link.href}
+                    href={serviceHrefs[i]}
                     className="text-sm text-gray-400 hover:text-white transition-colors"
                   >
-                    {link.label}
+                    {label}
                   </a>
                 </li>
               ))}
@@ -79,8 +77,8 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="border-t border-gray-800">
         <div className="mx-auto max-w-[1200px] px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-500">
-          <p>© 2026 Ádám Bauer. Všetky práva vyhradené.</p>
-          <p>Šamorín, Slovensko</p>
+          <p>{t.footer.copyright}</p>
+          <p>{t.footer.location}</p>
         </div>
       </div>
     </footer>

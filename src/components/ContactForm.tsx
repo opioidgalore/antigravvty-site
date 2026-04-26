@@ -16,29 +16,37 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import AnimationWrapper from "./AnimationWrapper";
+import { useLanguage } from "@/i18n/LanguageContext";
 
-const contactSchema = z.object({
-  name: z.string().min(2, "Meno musí mať aspoň 2 znaky"),
-  email: z.string().email("Zadajte platný e-mail"),
-  phone: z
-    .string()
-    .optional()
-    .refine(
-      (val) =>
-        !val ||
-        /^(\+421|0)\s?\d{3}\s?\d{3}\s?\d{3}$/.test(val.replace(/\s/g, "")),
-      "Zadajte platné slovenské číslo"
-    ),
-  message: z.string().optional(),
-  gdpr: z.boolean().refine((val) => val === true, {
-    message: "Musíte súhlasiť so spracovaním údajov",
-  }),
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
+type ContactFormData = {
+  name: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  gdpr: boolean;
+};
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const contactSchema = z.object({
+    name: z.string().min(2, t.contact.nameError),
+    email: z.string().email(t.contact.emailError),
+    phone: z
+      .string()
+      .optional()
+      .refine(
+        (val) =>
+          !val ||
+          /^(\+421|0)\s?\d{3}\s?\d{3}\s?\d{3}$/.test(val.replace(/\s/g, "")),
+        t.contact.phoneError
+      ),
+    message: z.string().optional(),
+    gdpr: z.boolean().refine((val) => val === true, {
+      message: t.contact.gdprError,
+    }),
+  });
 
   const {
     register,
@@ -84,10 +92,10 @@ export default function ContactForm() {
       <div className="mx-auto max-w-[600px] px-6">
         <AnimationWrapper variant="fadeIn" className="text-center mb-12">
           <h2 className="text-3xl md:text-[40px] md:leading-[48px] font-bold text-charcoal mb-4">
-            Kontaktujte ma
+            {t.contact.heading}
           </h2>
           <p className="text-lg text-gray">
-            Odpoviem do 2 hodín (aj cez víkend)
+            {t.contact.subtitle}
           </p>
         </AnimationWrapper>
 
@@ -96,9 +104,9 @@ export default function ContactForm() {
             <div className="text-center py-12 px-6 bg-success/5 rounded-xl border border-success/20">
               <CheckCircle className="w-12 h-12 text-success mx-auto mb-4" />
               <p className="text-xl font-semibold text-charcoal mb-2">
-                Ďakujem!
+                {t.contact.successTitle}
               </p>
-              <p className="text-gray">Odpoviem do 2 hodín.</p>
+              <p className="text-gray">{t.contact.successMessage}</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
@@ -108,12 +116,12 @@ export default function ContactForm() {
                   htmlFor="name"
                   className="block text-sm font-semibold text-charcoal mb-1.5"
                 >
-                  Meno *
+                  {t.contact.nameLabel}
                 </label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Ján Novák"
+                  placeholder={t.contact.namePlaceholder}
                   {...register("name")}
                   className={`w-full h-12 px-4 rounded-lg border text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary ${
                     errors.name ? "border-red-500" : "border-gray-300"
@@ -132,7 +140,7 @@ export default function ContactForm() {
                   htmlFor="email"
                   className="block text-sm font-semibold text-charcoal mb-1.5"
                 >
-                  E-mail *
+                  {t.contact.emailLabel}
                 </label>
                 <input
                   id="email"
@@ -156,12 +164,12 @@ export default function ContactForm() {
                   htmlFor="phone"
                   className="block text-sm font-semibold text-charcoal mb-1.5"
                 >
-                  Telefón
+                  {t.contact.phoneLabel}
                 </label>
                 <input
                   id="phone"
                   type="tel"
-                  placeholder="+421 900 123 456"
+                  placeholder={t.contact.phonePlaceholder}
                   {...register("phone")}
                   className={`w-full h-12 px-4 rounded-lg border text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary ${
                     errors.phone ? "border-red-500" : "border-gray-300"
@@ -180,12 +188,12 @@ export default function ContactForm() {
                   htmlFor="message"
                   className="block text-sm font-semibold text-charcoal mb-1.5"
                 >
-                  Správa
+                  {t.contact.messageLabel}
                 </label>
                 <textarea
                   id="message"
                   rows={4}
-                  placeholder="Čo potrebujete? (chatbot, SMS agent, Google recenzie, webstránka...)"
+                  placeholder={t.contact.messagePlaceholder}
                   {...register("message")}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"
                 />
@@ -200,7 +208,7 @@ export default function ContactForm() {
                     className="mt-0.5 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer accent-[#0066FF]"
                   />
                   <span className="text-sm text-gray leading-5">
-                    Súhlasím so spracovaním osobných údajov podľa GDPR
+                    {t.contact.gdpr}
                   </span>
                 </label>
                 {errors.gdpr && (
@@ -219,10 +227,10 @@ export default function ContactForm() {
                 {status === "loading" ? (
                   <>
                     <Loader2 className="w-5 h-5 animate-spin" />
-                    <span>Odosielam...</span>
+                    <span>{t.contact.sending}</span>
                   </>
                 ) : (
-                  "Odoslať správu"
+                  t.contact.submit
                 )}
               </button>
 
@@ -231,7 +239,7 @@ export default function ContactForm() {
                 <div className="flex items-center gap-2 text-red-500 text-sm">
                   <AlertCircle className="w-4 h-4 flex-shrink-0" />
                   <span>
-                    Chyba. Skúste znova alebo napíšte na{" "}
+                    {t.contact.errorMessage}
                     <a
                       href="mailto:baueradam535@gmail.com"
                       className="underline"

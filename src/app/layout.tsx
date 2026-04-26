@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/i18n/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -10,25 +12,25 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title:
-    "AI Automatizácia pre malé firmy | Chatbot, SMS agent, Google recenzie | Ádám Bauer",
+    "AI Automation for Small Businesses | Chatbot, SMS Agent, Google Reviews | Ádám Bauer",
   description:
-    "Chatbot na webe, SMS agent pri zmeškanom hovore a automatizácia Google recenzií pre elektrikárov, vodárov a stavbárov na Slovensku. Prvý mesiac zadarmo. Inštalácia za 1 deň.",
+    "Website chatbot, SMS agent for missed calls, and Google reviews automation for electricians, plumbers, and builders. First month free. Setup in 1 day.",
   openGraph: {
     title:
-      "AI Automatizácia pre malé firmy | Chatbot, SMS agent, Google recenzie | Ádám Bauer",
+      "AI Automation for Small Businesses | Chatbot, SMS Agent, Google Reviews | Ádám Bauer",
     description:
-      "Chatbot na webe, SMS agent pri zmeškanom hovore a automatizácia Google recenzií pre elektrikárov, vodárov a stavbárov na Slovensku. Prvý mesiac zadarmo. Inštalácia za 1 deň.",
+      "Website chatbot, SMS agent for missed calls, and Google reviews automation for electricians, plumbers, and builders. First month free. Setup in 1 day.",
     type: "website",
-    locale: "sk_SK",
+    locale: "en_US",
   },
 };
 
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  name: "Ádám Bauer - AI Automatizácia",
+  name: "Ádám Bauer - AI Automation",
   description:
-    "AI automatizácia pre malé firmy na Slovensku. Chatbot, SMS agent, Google recenzie.",
+    "AI automation for small businesses. Chatbot, SMS agent, Google reviews.",
   address: {
     "@type": "PostalAddress",
     addressLocality: "Šamorín",
@@ -52,14 +54,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="sk" className={inter.variable}>
+    <html lang="en" className={inter.variable}>
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <LanguageProvider>
+          <LanguageSwitcher />
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   );
 }
