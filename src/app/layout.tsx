@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { LanguageProvider } from "@/i18n/LanguageContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -66,6 +67,10 @@ export default function RootLayout({
           <LanguageSwitcher />
           {children}
         </LanguageProvider>
+        <Script
+          src="//code.tidio.co/0ydliketjalrisqglfhyegiekzaygeul.js"
+          strategy="lazyOnload"
+        />
       </body>
     </html>
   );

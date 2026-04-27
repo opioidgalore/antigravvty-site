@@ -137,7 +137,7 @@ export const translations = {
         },
       ],
       footer:
-        "Prices are final. No hidden fees. 6 or 12-month contract. Longer contract = lower monthly price.",
+        "Prices are final. No hidden fees. Cancel anytime, no commitment.",
     },
     websiteUpsell: {
       heading: "Need a new website too?",
@@ -160,9 +160,9 @@ export const translations = {
             "No weeks of waiting. The chatbot works within 24 hours of signing the contract.",
         },
         {
-          title: "Support in Slovak",
+          title: "Fast Support",
           description:
-            "I write emails and SMS. If you need a call, we can arrange it in English/Hungarian.",
+            "Support is 100% via SMS and email — you get answers in minutes, not missed calls.",
         },
       ],
     },
@@ -221,7 +221,8 @@ export const translations = {
       messageLabel: "Message",
       messagePlaceholder:
         "What do you need? (chatbot, SMS agent, Google reviews, website...)",
-      gdpr: "I agree to the processing of personal data according to GDPR",
+      gdpr: "I agree to the processing of personal data according to the",
+      gdprLinkText: "Privacy Policy",
       gdprError: "You must agree to data processing",
       submit: "Send message",
       sending: "Sending...",
@@ -234,7 +235,7 @@ export const translations = {
       brandDescription:
         "I help electricians, plumbers, and builders get more customers without having to pick up the phone.",
       contactHeading: "Contact",
-      smsNote: "(SMS preferred, call in EN/HU/FR)",
+      smsNote: "(SMS preferred, support in EN/HU/SK)",
       servicesHeading: "Services",
       serviceLinks: [
         "Chatbot",
@@ -384,7 +385,7 @@ export const translations = {
         },
       ],
       footer:
-        "Az árak véglegesek. Nincsenek rejtett díjak. 6 vagy 12 hónapos szerződés. Hosszabb szerződés = alacsonyabb havi ár.",
+        "Az árak véglegesek. Nincsenek rejtett díjak. Bármikor lemondható, nincs kötelezettség.",
     },
     websiteUpsell: {
       heading: "Új weboldalra is szüksége van?",
@@ -407,9 +408,9 @@ export const translations = {
             "Nem kell heteket várni. A chatbot a szerződés aláírásától számított 24 órán belül működik.",
         },
         {
-          title: "Támogatás magyarul",
+          title: "Gyors támogatás",
           description:
-            "E-maileket és SMS-eket írok. Ha telefonhívásra van szükség, megbeszéljük angolul/magyarul.",
+            "A támogatás 100%-ban SMS-ben és e-mailben zajlik — percek alatt kap választ, nem elmulasztott hívásokat.",
         },
       ],
     },
@@ -469,7 +470,8 @@ export const translations = {
       messageLabel: "Üzenet",
       messagePlaceholder:
         "Mire van szüksége? (chatbot, SMS ügynök, Google értékelések, weboldal...)",
-      gdpr: "Hozzájárulok a személyes adatok GDPR szerinti feldolgozásához",
+      gdpr: "Hozzájárulok a személyes adatok feldolgozásához az",
+      gdprLinkText: "Adatvédelmi szabályzat",
       gdprError: "Hozzá kell járulnia az adatfeldolgozáshoz",
       submit: "Üzenet küldése",
       sending: "Küldés...",
@@ -482,7 +484,7 @@ export const translations = {
       brandDescription:
         "Segítek villanyszerelőknek, vízvezeték-szerelőknek és építőknek több ügyfelet szerezni anélkül, hogy felvennék a telefont.",
       contactHeading: "Kapcsolat",
-      smsNote: "(SMS előnyben, hívás EN/HU/FR nyelven)",
+      smsNote: "(SMS előnyben, támogatás EN/HU/SK nyelven)",
       servicesHeading: "Szolgáltatások",
       serviceLinks: [
         "Chatbot",
@@ -632,7 +634,7 @@ export const translations = {
         },
       ],
       footer:
-        "Ceny sú konečné. Žiadne skryté poplatky. Zmluva na 6 alebo 12 mesiacov. Dlhšia zmluva = nižšia mesačná cena.",
+        "Ceny sú konečné. Žiadne skryté poplatky. Zrušenie kedykoľvek, bez záväzkov.",
     },
     websiteUpsell: {
       heading: "Potrebujete aj novú webstránku?",
@@ -655,9 +657,9 @@ export const translations = {
             "Nie týždne čakania. Chatbot funguje do 24 hodín od podpisu zmluvy.",
         },
         {
-          title: "Podpora v slovenčine",
+          title: "Rýchla podpora",
           description:
-            "Píšem e-maily, SMS. Ak potrebujete hovor, dohodneme sa v angličtine/maďarčine.",
+            "Podpora je 100% cez SMS a e-mail — odpoveď dostanete za minúty, nie zmeškané hovory.",
         },
       ],
     },
@@ -716,7 +718,8 @@ export const translations = {
       messageLabel: "Správa",
       messagePlaceholder:
         "Čo potrebujete? (chatbot, SMS agent, Google recenzie, webstránka...)",
-      gdpr: "Súhlasím so spracovaním osobných údajov podľa GDPR",
+      gdpr: "Súhlasím so spracovaním osobných údajov podľa",
+      gdprLinkText: "Zásady ochrany osobných údajov",
       gdprError: "Musíte súhlasiť so spracovaním údajov",
       submit: "Odoslať správu",
       sending: "Odosielam...",
@@ -729,7 +732,7 @@ export const translations = {
       brandDescription:
         "Pomáham elektrikárom, vodárom a stavbárom získavať viac zákazníkov bez toho, aby museli zdvihnúť telefón.",
       contactHeading: "Kontakt",
-      smsNote: "(SMS preferovaná, hovor v EN/HU/FR)",
+      smsNote: "(SMS preferovaná, podpora v EN/HU/SK)",
       servicesHeading: "Služby",
       serviceLinks: [
         "Chatbot",

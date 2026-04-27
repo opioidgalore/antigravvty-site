@@ -1,84 +1,33 @@
 "use client";
 
-/*
- * FORMSPREE SETUP (REQUIRED):
- * 1. Go to https://formspree.io and sign up with baueradam535@gmail.com
- * 2. Create a new form
- * 3. Copy the endpoint URL (https://formspree.io/f/xxxxx)
- * 4. Create .env.local file in project root
- * 5. Add: NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/YOUR_ENDPOINT
- * 6. Restart dev server
- */
-
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { useState, type FormEvent } from "react";
 import { Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import AnimationWrapper from "./AnimationWrapper";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-type ContactFormData = {
-  name: string;
-  email: string;
-  phone?: string;
-  message?: string;
-  gdpr: boolean;
-};
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xjgjqgyo";
 
 export default function ContactForm() {
   const { t } = useLanguage();
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
 
-  const contactSchema = z.object({
-    name: z.string().min(2, t.contact.nameError),
-    email: z.string().email(t.contact.emailError),
-    phone: z
-      .string()
-      .optional()
-      .refine(
-        (val) =>
-          !val ||
-          /^(\+421|0)\s?\d{3}\s?\d{3}\s?\d{3}$/.test(val.replace(/\s/g, "")),
-        t.contact.phoneError
-      ),
-    message: z.string().optional(),
-    gdpr: z.boolean().refine((val) => val === true, {
-      message: t.contact.gdprError,
-    }),
-  });
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-  });
-
-  const onSubmit = async (data: ContactFormData) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setStatus("loading");
-    try {
-      // Formspree or custom endpoint
-      const endpoint =
-        process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ||
-        "https://formspree.io/f/placeholder";
 
-      const res = await fetch(endpoint, {
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          phone: data.phone || "",
-          message: data.message || "",
-        }),
+        body: formData,
+        headers: { Accept: "application/json" },
       });
 
       if (res.ok) {
         setStatus("success");
-        reset();
+        form.reset();
       } else {
         setStatus("error");
       }
@@ -109,8 +58,8 @@ export default function ContactForm() {
               <p className="text-gray">{t.contact.successMessage}</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5" noValidate>
-              {/* Meno */}
+            <form onSubmit={handleSubmit} className="space-y-5" noValidate>
+              {/* Name */}
               <div>
                 <label
                   htmlFor="name"
@@ -120,21 +69,14 @@ export default function ContactForm() {
                 </label>
                 <input
                   id="name"
+                  name="name"
                   type="text"
                   placeholder={t.contact.namePlaceholder}
-                  {...register("name")}
-                  className={`w-full h-12 px-4 rounded-lg border text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary ${
-                    errors.name ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className="w-full h-12 px-4 rounded-lg border border-gray-300 text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary"
                 />
-                {errors.name && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.name.message}
-                  </p>
-                )}
               </div>
 
-              {/* E-mail */}
+              {/* Email */}
               <div>
                 <label
                   htmlFor="email"
@@ -144,45 +86,15 @@ export default function ContactForm() {
                 </label>
                 <input
                   id="email"
+                  name="email"
                   type="email"
+                  required
                   placeholder="jan.novak@firma.sk"
-                  {...register("email")}
-                  className={`w-full h-12 px-4 rounded-lg border text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary ${
-                    errors.email ? "border-red-500" : "border-gray-300"
-                  }`}
+                  className="w-full h-12 px-4 rounded-lg border border-gray-300 text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary"
                 />
-                {errors.email && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.email.message}
-                  </p>
-                )}
               </div>
 
-              {/* Telefón */}
-              <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-semibold text-charcoal mb-1.5"
-                >
-                  {t.contact.phoneLabel}
-                </label>
-                <input
-                  id="phone"
-                  type="tel"
-                  placeholder={t.contact.phonePlaceholder}
-                  {...register("phone")}
-                  className={`w-full h-12 px-4 rounded-lg border text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary ${
-                    errors.phone ? "border-red-500" : "border-gray-300"
-                  }`}
-                />
-                {errors.phone && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.phone.message}
-                  </p>
-                )}
-              </div>
-
-              {/* Správa */}
+              {/* Message */}
               <div>
                 <label
                   htmlFor="message"
@@ -192,9 +104,10 @@ export default function ContactForm() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   rows={4}
+                  required
                   placeholder={t.contact.messagePlaceholder}
-                  {...register("message")}
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 text-base text-charcoal placeholder-gray-400 outline-none transition-all focus:ring-2 focus:ring-primary/30 focus:border-primary resize-none"
                 />
               </div>
@@ -204,18 +117,22 @@ export default function ContactForm() {
                 <label className="flex items-start gap-3 cursor-pointer">
                   <input
                     type="checkbox"
-                    {...register("gdpr")}
+                    name="gdpr"
+                    required
                     className="mt-0.5 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer accent-[#0066FF]"
                   />
                   <span className="text-sm text-gray leading-5">
-                    {t.contact.gdpr}
+                    {t.contact.gdpr}{" "}
+                    <a
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline hover:text-primary-dark"
+                    >
+                      {t.contact.gdprLinkText}
+                    </a>
                   </span>
                 </label>
-                {errors.gdpr && (
-                  <p className="mt-1 text-sm text-red-500">
-                    {errors.gdpr.message}
-                  </p>
-                )}
               </div>
 
               {/* Submit */}
