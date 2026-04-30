@@ -4,6 +4,21 @@ export async function GET(req) {
 
   console.log("Email opened:", id, new Date());
 
+  try {
+    await fetch("https://bauer-automation.synology.me/webhook/vercel-emailtracking", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        id,
+        openedAt: new Date(),
+      }),
+    });
+  } catch (err) {
+    console.error("Webhook error:", err);
+  }
+
   const img = Buffer.from(
     "R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==",
     "base64"
